@@ -19,5 +19,6 @@ from blog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.hello,name="home"), # name is name of rout
-    path('page1/',views.page1)
+    path('page1/',views.page1),
+    path('createForm',views.createForm)
 ]
