@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>In template</h1>
+    <h1>name : {{ name }}</h1>
+    <h3>author : {{ author }}</h3>
+    <ul>
+        {% for tag in tags %}
+            <li>{{ tag }}</li>
+        {% endfor %}
+    </ul>
+    <h2>ระดับความนิยมของบทความ</h2>
+    {% if rating > 3 %}
+        <h2>ดีมาก</h2>
+    {% else %}
+        <h2>ไม่ได้รับความนิยม</h2>
+    {% endif %}
+{% endblock %}
