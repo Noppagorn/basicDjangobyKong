@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from .models import Blog
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,auth
+from django.contrib import messages
 # Create your views here.
 def hello(request):
     # return HttpResponse("<h2>HelloWorld</h2>")
@@ -26,6 +27,19 @@ def page1(request):
 def createForm(request):
     return render(request,'form.html')
 
+def loginForm(request):
+    return render(request,"login.html")
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    # login
+    user = auth.authenticate(username=username,password=password)
+    if user is not None:
+        auth.login(request,user)
+        return redirect("/")
+    else:
+        messages.info(request, "Not have this user")
+        return redirect("/loginForm")
 def addUser(request):
     # change to post because GET show data in url
     username = request.POST['username']
@@ -37,10 +51,12 @@ def addUser(request):
     # description = request.POST["description"]
     if password == repassword:
         if User.objects.filter(username=username).exists():
-            print("User name is existing")
+            # print("User name is existing")
+            messages.info(request,"User name is existing")
             return redirect("/createForm")
         elif User.objects.filter(email=email).exists():
             print("Email is existing")
+            messages.info(request, "Email is existing")
             return redirect("/createForm")
         else:
             user = User.objects.create_user(
@@ -53,6 +69,7 @@ def addUser(request):
             user.save()
             return redirect("/")
     else:
-      return redirect("/createForm")
+        messages.info(request,"Password not match")
+        return redirect("/createForm")
     # return render(request,'result.html')
     # return render()
