@@ -19,3 +19,12 @@ def page1(request):
 
 def createForm(request):
     return render(request,'form.html')
+
+def addBlog(request):
+    # change to post because GET show data in url
+    name = request.POST['name']
+    description = request.POST["description"]
+    return render(request,'result.html',{
+        'name' : name,
+        'description' : description,
+    })

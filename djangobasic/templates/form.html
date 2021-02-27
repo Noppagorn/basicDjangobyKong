@@ -2,7 +2,8 @@
 
 {% block content %}
 <h1 align="center">เขียนบทความ</h1>
-<form action="" method="get">
+<form action="addForm" method="post">
+    {% csrf_token %}
     <div class="form-group">
         <label for="">ชื่อบทความ</label>
         <input type="text" class="form-control" name="name">
