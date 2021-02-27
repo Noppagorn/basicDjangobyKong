@@ -40,6 +40,9 @@ def login(request):
     else:
         messages.info(request, "Not have this user")
         return redirect("/loginForm")
+def logout(request):
+    auth.logout(request)
+    return redirect("/")
 def addUser(request):
     # change to post because GET show data in url
     username = request.POST['username']
