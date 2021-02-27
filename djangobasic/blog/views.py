@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Blog
+from django.contrib.auth.models import User
 # Create your views here.
 def hello(request):
     # return HttpResponse("<h2>HelloWorld</h2>")
@@ -25,11 +26,33 @@ def page1(request):
 def createForm(request):
     return render(request,'form.html')
 
-def addBlog(request):
+def addUser(request):
     # change to post because GET show data in url
-    name = request.POST['name']
-    description = request.POST["description"]
-    return render(request,'result.html',{
-        'name' : name,
-        'description' : description,
-    })
+    username = request.POST['username']
+    firstname = request.POST['firstname']
+    lastname = request.POST['lastname']
+    email = request.POST['email']
+    password = request.POST['password']
+    repassword = request.POST['repassword']
+    # description = request.POST["description"]
+    if password == repassword:
+        if User.objects.filter(username=username).exists():
+            print("User name is existing")
+            return redirect("/createForm")
+        elif User.objects.filter(email=email).exists():
+            print("Email is existing")
+            return redirect("/createForm")
+        else:
+            user = User.objects.create_user(
+                username=username,
+                password=password,
+                email=email,
+                first_name=firstname,
+                last_name=lastname,
+            )
+            user.save()
+            return redirect("/")
+    else:
+      return redirect("/createForm")
+    # return render(request,'result.html')
+    # return render()

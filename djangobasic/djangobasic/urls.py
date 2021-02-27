@@ -21,5 +21,5 @@ urlpatterns = [
     path('',views.hello,name="home"), # name is name of rout
     path('page1/',views.page1),
     path('createForm',views.createForm),
-    path('addForm',views.addBlog)
+    path('addForm',views.addUser)
 ]
